@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 pipeline {
     agent any
     tools {
@@ -5,6 +6,13 @@ pipeline {
     }
 
     stages {
+        stage('printenv') {
+            steps {
+                echo 'env:${env}'
+                echo 'params:${params}'
+                echo 'currentBuild:${currentBuild}'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn clean'
