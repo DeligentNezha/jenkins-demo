@@ -9,7 +9,7 @@ pipeline {
             steps {
                 sh 'mvn clean'
                 sh 'mvn install'
-                sh 'mvn package -P test'
+                sh 'mvn package'
             }
         }
 //         stage('Test') {
@@ -30,7 +30,8 @@ pipeline {
 //                 echo '本地安装'
 //                 sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name -Dmaven.repo.local=/home/admin/.m2/repository'
 
-                sh "JENKINS_NODE_COOKIE=dontKillMe nohup java -jar target/diabetes_monitor-api.jar > app.log 2>&1 &"
+                sh 'cp ${WORKSPACE}/track-core/target/diabetes_monitor-api.jar /opt/jar'
+                sh "JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/jar/jenkins-demo.jar > /opt/jar/app.log 2>&1 &"
 //                 sh './track-core/jenkins/scripts/deliver.sh'
             }
         }
