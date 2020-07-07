@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('printenv') {
             steps {
-                echo 'env:${env}'
+                echo 'env:${env.PATH}'
                 echo 'params:${params}'
                 echo 'currentBuild:${currentBuild}'
             }
