@@ -30,7 +30,7 @@ pipeline {
 //                 echo '本地安装'
 //                 sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name -Dmaven.repo.local=/home/admin/.m2/repository'
 
-                sh 'cp ${WORKSPACE}/track-core/target/jenkins-demo.jar /opt/jar'
+                sh 'cp ${WORKSPACE}/target/jenkins-demo.jar /opt/jar'
                 sh "JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/jar/jenkins-demo.jar > /opt/jar/app.log 2>&1 &"
 //                 sh './track-core/jenkins/scripts/deliver.sh'
             }
