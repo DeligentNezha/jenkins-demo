@@ -10,8 +10,8 @@ pipeline {
     environment {
         PROJECT_FINAL_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
         PROJECT_PACKAGING = sh(script: 'mvn help:evaluate -Dexpression=project.packaging | grep \"^[^\\[]\"', , returnStdout: true).trim()
-        ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME.$PROJECT_PACKAGING"', , returnStdout: true).trim()
-        APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
+        ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME\"".\""$PROJECT_PACKAGING"', , returnStdout: true).trim()
+        APP_PROCESS_ID = sh(script: 'jps | grep "$APPLICATION_NAME".jar | awk \'{print $1}\'', , returnStdout: true).trim()
     }
 //     parameters {
 //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
