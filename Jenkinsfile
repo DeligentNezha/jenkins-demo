@@ -95,7 +95,7 @@ pipeline {
 //         }
         stage('Kill') {
             environment {
-                APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
+                APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             when {
               allOf {
