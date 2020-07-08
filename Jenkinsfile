@@ -105,10 +105,14 @@ pipeline {
         }
 
         stage('Deploy') {
+            environment {
+                APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\[]\"', , returnStdout: true).trim()
+            }
             steps {
                 echo "当前用户: ${USER}"
                 echo "当前目录: ${PWD}"
                 echo "当前工作目录: ${WORKSPACE}"
+                echo "应用名: ${APPLICATION_NAME}"
 //                 echo '本地安装'
 //                 sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name -Dmaven.repo.local=/home/admin/.m2/repository'
 
