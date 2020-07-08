@@ -10,6 +10,7 @@ pipeline {
     environment {
         PROJECT_FINAL_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
         PROJECT_PACKAGING = sh(script: 'mvn help:evaluate -Dexpression=project.packaging | grep \"^[^\\[]\"', , returnStdout: true).trim()
+        ARTIFACT_FILENAME = '"$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"'
         APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()
     }
 //     parameters {
@@ -53,6 +54,7 @@ pipeline {
             steps {
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
+                sh 'echo "ARTIFACT_FILENAME is $ARTIFACT_FILENAME"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
