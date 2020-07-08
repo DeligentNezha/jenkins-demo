@@ -1,17 +1,18 @@
-#!/usr/bin/env groovy
+//#!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent {docker 'maven:3-alpine'}
     tools {
         maven "Maven"
     }
 
     stages {
-        stage('printenv') {
-            steps {
-                echo 'env:${env.PATH}'
-                echo 'params:${params}'
-                echo 'currentBuild:${currentBuild}'
-            }
+        stage('Env Check') {
+                agent {docker 'openjdk:8-jre'}
+                steps {
+                    echo 'agent in stage'
+                    echo 'jre check'
+                    sh 'java -version'
+                }
         }
         stage('Build') {
             steps {
