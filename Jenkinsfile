@@ -45,14 +45,6 @@ pipeline {
         }
 
         stage('Env Check') {
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "admin,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
-            }
             environment {
                 AN_ACCESS_KEY = credentials('github')
             }
@@ -81,7 +73,16 @@ pipeline {
         }
 
         stage('Build') {
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "admin,bob"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
+            }
             steps {
+                echo "hello, ${PERSON}, let's begin build"
                 sh 'mvn clean'
                 sh 'mvn install'
                 sh 'mvn package'
