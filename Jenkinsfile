@@ -47,8 +47,7 @@ pipeline {
         stage('Env Check') {
             environment {
                 AN_ACCESS_KEY = credentials('github')
-//                 APP_PROCESS_ID = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', returnStdout: true).trim() as Integer
-                CUR_PATH = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim()
+                APP_PROCESS_ID = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             steps {
                 sh 'printenv'
@@ -56,7 +55,7 @@ pipeline {
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
                 sh 'echo "AN_ACCESS_KEY_PSW is $AN_ACCESS_KEY_PSW"'
-                sh 'echo "sh CUR_PATH is $CUR_PATH"'
+                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
 //                 sh 'echo "AN_ACCESS_KEY_PSW is $APP_PROCESS_ID"'
             }
         }
