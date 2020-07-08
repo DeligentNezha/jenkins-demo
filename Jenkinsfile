@@ -8,8 +8,9 @@ pipeline {
         timestamps()
     }
     environment {
-        APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
-        APP_PROCESS_ID = sh(script: 'jps | grep "$APPLICATION_NAME".jar | awk \'{print $1}\'', , returnStdout: true).trim()
+        PROJECT_FINAL_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
+        PROJECT_PACKAGING = sh(script: 'mvn help:evaluate -Dexpression=project.packaging | grep \"^[^\\[]\"', , returnStdout: true).trim()
+        APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()
     }
 //     parameters {
 //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -50,7 +51,7 @@ pipeline {
                 AN_ACCESS_KEY = credentials('github')
             }
             steps {
-                sh 'echo "APPLICATION_NAME is ${APPLICATION_NAME}"'
+                sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
