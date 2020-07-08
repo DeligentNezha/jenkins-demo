@@ -48,12 +48,13 @@ pipeline {
         stage('Env Check') {
             environment {
                 AN_ACCESS_KEY = credentials('github')
-                ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
-            }
+                ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).tri
+                APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()}
             steps {
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "PROJECT_PACKAGING is ${PROJECT_PACKAGING}"'
                 sh 'echo "ARTIFACT_FILENAME is $ARTIFACT_FILENAME"'
+                sh 'echo "ARTIFACT_FILENAME is $APP_PROCESS_ID"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
