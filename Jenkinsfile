@@ -92,16 +92,16 @@ pipeline {
 //                 }
 //             }
 //         }
-//         stage('Kill') {
-//             steps {
-//                 when {
-//                     allOf {
-//                         branch 'develop'
-//                         expression {return }
-//                     }
-//                 }
-//             }
-//         }
+        stage('Kill') {
+            steps {
+                when {
+                    allOf {
+                        branch 'develop'
+                        expression {return '$APP_PROCESS_ID' > 0}
+                    }
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
