@@ -50,14 +50,12 @@ pipeline {
                 AN_ACCESS_KEY = credentials('github')
             }
             steps {
-                sh 'printenv'
+                sh 'echo "APPLICATION_NAME is ${APPLICATION_NAME}"'
+                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
                 sh 'echo "AN_ACCESS_KEY_PSW is $AN_ACCESS_KEY_PSW"'
-                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
-                sh 'echo "APPLICATION_NAME is ${APPLICATION_NAME}"'
-//                 sh 'echo "AN_ACCESS_KEY_PSW is $APP_PROCESS_ID"'
             }
         }
 
