@@ -76,7 +76,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "hello, ${PERSON}, let's begin build"
                 sh 'mvn clean'
                 sh 'mvn install'
                 sh 'mvn package'
