@@ -2,7 +2,11 @@
 pipeline {
 //     agent { docker 'maven:3-alpine' }
     agent any
-
+    options {
+        retry(3)
+        timeout(time: 1, unit: 'HOURS')
+        timestamps()
+    }
     environment {
         CC = 'clang'
     }
