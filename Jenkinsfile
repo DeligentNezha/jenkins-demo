@@ -100,7 +100,7 @@ pipeline {
             when {
               allOf {
                 branch 'develop'
-                expression { return "$APP_PROCESS_ID" > 0}
+                expression { return 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'' > 0}
               }
             }
             steps {
