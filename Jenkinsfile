@@ -27,6 +27,9 @@ pipeline {
             }
             steps {
                 sh 'printenv'
+                sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
+                sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
+                sh 'echo "AN_ACCESS_KEY_PSW is $AN_ACCESS_KEY_PSW"'
             }
         }
 
