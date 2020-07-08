@@ -8,19 +8,19 @@ pipeline {
         timestamps()
     }
     environment {
-        CC = 'clang'
+        APP_PROCESS_ID = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim()
     }
-    parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
-    }
+//     parameters {
+//         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+//
+//         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+//
+//         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+//
+//         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+//
+//         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+//     }
 
     triggers {
         // 每五分钟 详情查看https://blog.csdn.net/nklinsirui/article/details/95338535
@@ -47,7 +47,6 @@ pipeline {
         stage('Env Check') {
             environment {
                 AN_ACCESS_KEY = credentials('github')
-                APP_PROCESS_ID = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             steps {
                 sh 'printenv'
@@ -60,20 +59,20 @@ pipeline {
             }
         }
 
-        stage('Parameters') {
-            steps {
-                // 打印参数时使用双引号包裹
-                echo "Hello ${params.PERSON}"
-
-                echo "Biography: ${params.BIOGRAPHY}"
-
-                echo "Toggle: ${params.TOGGLE}"
-
-                echo "Choice: ${params.CHOICE}"
-
-                echo "Password: ${params.PASSWORD}"
-            }
-        }
+//         stage('Parameters') {
+//             steps {
+//                 // 打印参数时使用双引号包裹
+//                 echo "Hello ${params.PERSON}"
+//
+//                 echo "Biography: ${params.BIOGRAPHY}"
+//
+//                 echo "Toggle: ${params.TOGGLE}"
+//
+//                 echo "Choice: ${params.CHOICE}"
+//
+//                 echo "Password: ${params.PASSWORD}"
+//             }
+//         }
 
         stage('Build') {
             steps {
@@ -93,6 +92,17 @@ pipeline {
 //                 }
 //             }
 //         }
+//         stage('Kill') {
+//             steps {
+//                 when {
+//                     allOf {
+//                         branch 'develop'
+//                         expression {return }
+//                     }
+//                 }
+//             }
+//         }
+
         stage('Deploy') {
             steps {
                 echo "当前用户: ${USER}"
