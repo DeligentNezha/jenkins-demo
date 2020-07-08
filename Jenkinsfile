@@ -96,8 +96,8 @@ pipeline {
             steps {
                 when {
                     allOf {
-                        branch 'develop'
-                        expression {return '$APP_PROCESS_ID' > 0}
+                        branch 'develop';
+                        expression { return '$APP_PROCESS_ID' > 0 }
                     }
                 }
             }
