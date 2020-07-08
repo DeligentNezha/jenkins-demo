@@ -1,18 +1,18 @@
 //#!/usr/bin/env groovy
 pipeline {
-    agent {docker 'maven:3-alpine'}
+    agent { docker 'maven:3-alpine' }
     tools {
         maven "Maven"
     }
 
     stages {
         stage('Env Check') {
-                agent {docker 'openjdk:8-jre'}
-                steps {
-                    echo 'agent in stage'
-                    echo 'jre check'
-                    sh 'java -version'
-                }
+            agent { docker 'openjdk:8-jre' }
+            steps {
+                echo 'agent in stage'
+                echo 'jre check'
+                sh 'java -version'
+            }
         }
         stage('Build') {
             steps {
@@ -44,5 +44,47 @@ pipeline {
 //                 sh './track-core/jenkins/scripts/deliver.sh'
             }
         }
+    }
+    post {
+        always {
+            echo 'pipeline post always !'
+        }
+
+        changed {
+            echo 'pipeline post changed !'
+        }
+
+        fixed {
+            echo 'pipeline post fixed !'
+        }
+
+        regression {
+            echo 'pipeline post regression !'
+        }
+
+        aborted {
+            echo 'pipeline post aborted !'
+        }
+
+        failure {
+            echo 'pipeline post failure !'
+        }
+
+        success {
+            echo 'pipeline post success !'
+        }
+
+        unstable {
+            echo 'pipeline post unstable !'
+        }
+
+        unsuccessful {
+            echo 'pipeline post unsuccessful !'
+        }
+
+        cleanup {
+            echo 'pipeline post cleanup !'
+        }
+
     }
 }
