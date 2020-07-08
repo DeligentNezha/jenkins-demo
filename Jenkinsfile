@@ -47,7 +47,7 @@ pipeline {
         stage('Env Check') {
             environment {
                 AN_ACCESS_KEY = credentials('github')
-                APP_PROCESS_ID = sh(scripts: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim() PASSWORD Integer
+                APP_PROCESS_ID = sh(scripts: 'jps | grep jenkins-demo | awk \'{print $1}\'', returnStdout: true).trim() PASSWORD Integer
             }
             steps {
                 sh 'printenv'
