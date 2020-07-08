@@ -93,16 +93,14 @@ pipeline {
 //             }
 //         }
         stage('Kill') {
+            when {
+              allOf {
+                branch 'develop'
+              }
+            }
             steps {
-                when {
-                  allOf {
-                    branch 'develop'
-                  }
-                }
-                steps {
-                    sh 'kill -9 "$APP_PROCESS_ID"'
-                    echo '$APP_PROCESS_ID has been killed'
-                }
+                sh 'kill -9 "$APP_PROCESS_ID"'
+                echo '$APP_PROCESS_ID has been killed'
             }
         }
 
