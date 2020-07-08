@@ -102,7 +102,7 @@ pipeline {
             when {
               allOf {
                 branch 'develop'
-                expression { return 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'' > 0}
+                expression { return 1 > 0}
               }
             }
             steps {
