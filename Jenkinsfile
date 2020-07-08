@@ -48,7 +48,7 @@ pipeline {
             environment {
                 AN_ACCESS_KEY = credentials('github')
 //                 APP_PROCESS_ID = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', returnStdout: true).trim() as Integer
-                CUR_PATH = sh(script: 'pwd', , returnStdout: true).trim()
+                CUR_PATH = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             steps {
                 sh 'printenv'
