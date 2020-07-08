@@ -24,8 +24,8 @@ pipeline {
 //     }
 
     triggers {
-        // 每五分钟 详情查看https://blog.csdn.net/nklinsirui/article/details/95338535
-        cron('H/5 * * * *')
+        // 每30分钟 详情查看https://blog.csdn.net/nklinsirui/article/details/95338535
+        cron('H/30 * * * *')
     }
 
     tools {
@@ -49,13 +49,11 @@ pipeline {
             environment {
                 AN_ACCESS_KEY = credentials('github')
                 ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
-                APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             steps {
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "PROJECT_PACKAGING is ${PROJECT_PACKAGING}"'
                 sh 'echo "ARTIFACT_FILENAME is $ARTIFACT_FILENAME"'
-                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
@@ -97,7 +95,6 @@ pipeline {
 //         }
         stage('Kill') {
             environment {
-                ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
                 APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             when {
@@ -107,6 +104,7 @@ pipeline {
               }
             }
             steps {
+                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 sh 'kill -9 "$APP_PROCESS_ID"'
                 echo '$APP_PROCESS_ID has been killed'
             }
