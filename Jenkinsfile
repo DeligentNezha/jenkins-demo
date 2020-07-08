@@ -106,7 +106,7 @@ pipeline {
 
         stage('Deploy') {
             environment {
-                APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\[]\"', , returnStdout: true).trim()
+                APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
             }
             steps {
                 echo "当前用户: ${USER}"
