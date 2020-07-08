@@ -47,6 +47,7 @@ pipeline {
         stage('Env Check') {
             environment {
                 AN_ACCESS_KEY = credentials('github')
+                APP_PROCESS_ID = sh(scripts: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim() PASSWORD Integer
             }
             steps {
                 sh 'printenv'
@@ -54,6 +55,7 @@ pipeline {
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
                 sh 'echo "AN_ACCESS_KEY_PSW is $AN_ACCESS_KEY_PSW"'
+                sh 'echo "AN_ACCESS_KEY_PSW is $APP_PROCESS_ID"'
             }
         }
 
@@ -73,14 +75,14 @@ pipeline {
         }
 
         stage('Build') {
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "admin,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
-            }
+//             input {
+//                 message "Should we continue?"
+//                 ok "Yes, we should."
+//                 submitter "admin,bob"
+//                 parameters {
+//                     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+//                 }
+//             }
             steps {
                 echo "hello, ${PERSON}, let's begin build"
                 sh 'mvn clean'
