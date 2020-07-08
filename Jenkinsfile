@@ -96,8 +96,10 @@ pipeline {
 //             }
 //         }
         stage('Kill') {
-            ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
-            APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
+            environment {
+                ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
+                APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
+            }
             when {
               allOf {
                 branch 'develop'
