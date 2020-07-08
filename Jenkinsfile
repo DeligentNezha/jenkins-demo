@@ -10,8 +10,6 @@ pipeline {
     environment {
         PROJECT_FINAL_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
         PROJECT_PACKAGING = sh(script: 'mvn help:evaluate -Dexpression=project.packaging | grep \"^[^\\[]\"', , returnStdout: true).trim()
-        ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME".jar-jar', , returnStdout: true).trim()
-        APP_PROCESS_ID = sh(script: 'jps | grep "$APPLICATION_NAME".jar | awk \'{print $1}\'', , returnStdout: true).trim()
     }
 //     parameters {
 //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -51,13 +49,13 @@ pipeline {
             environment {
                 AN_ACCESS_KEY = credentials('github')
                 ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
+                APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
             }
             steps {
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "PROJECT_PACKAGING is ${PROJECT_PACKAGING}"'
-                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 sh 'echo "ARTIFACT_FILENAME is $ARTIFACT_FILENAME"'
-                sh 'echo "APPLICATION_NAME is $APPLICATION_NAME"'
+                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
@@ -98,6 +96,8 @@ pipeline {
 //             }
 //         }
         stage('Kill') {
+            ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
+            APP_PROCESS_ID = sh(script: 'jps | grep "$ARTIFACT_FILENAME" | awk \'{print $1}\'', , returnStdout: true).trim()
             when {
               allOf {
                 branch 'develop'
