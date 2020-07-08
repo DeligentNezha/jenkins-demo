@@ -21,6 +21,12 @@ pipeline {
 
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
+
+    triggers {
+        // 每五分钟 详情查看https://blog.csdn.net/nklinsirui/article/details/95338535
+        cron('H/5 * * * *')
+    }
+
     tools {
         maven "Maven"
     }
@@ -43,6 +49,7 @@ pipeline {
             }
             steps {
                 sh 'printenv'
+                // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
                 sh 'echo "AN_ACCESS_KEY_PSW is $AN_ACCESS_KEY_PSW"'
@@ -51,7 +58,8 @@ pipeline {
 
         stage('Parameters') {
             steps {
-                echo 'Hello ${params.PERSON}'
+                // 打印参数时使用双引号包裹
+                echo "Hello ${params.PERSON}"
 
                 echo "Biography: ${params.BIOGRAPHY}"
 
