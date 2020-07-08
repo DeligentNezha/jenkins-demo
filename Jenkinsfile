@@ -23,6 +23,9 @@ pipeline {
                 echo 'jre check'
                 sh 'java -version'
             }
+            options {
+                skipDefaultCheckout()
+            }
         }
 
         stage('Env Check') {
