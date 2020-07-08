@@ -1,12 +1,18 @@
 //#!/usr/bin/env groovy
 pipeline {
-    agent { docker 'maven:3-alpine' }
+//     agent { docker 'maven:3-alpine' }
+    agent any
+
+    environment {
+        CC = 'clang'
+    }
+
     tools {
         maven "Maven"
     }
 
     stages {
-        stage('Env Check') {
+        stage('Agent Check') {
             agent { docker 'openjdk:8-jre' }
             steps {
                 echo 'agent in stage'
@@ -14,6 +20,16 @@ pipeline {
                 sh 'java -version'
             }
         }
+
+        stage('Env Check') {
+            environment {
+                AN_ACCESS_KEY = credentials('github')
+            }
+            steps {
+                sh 'printenv'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean'
