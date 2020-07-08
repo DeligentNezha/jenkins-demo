@@ -8,7 +8,8 @@ pipeline {
         timestamps()
     }
     environment {
-        APP_PROCESS_ID = sh(script: 'jps | grep jenkins-demo | awk \'{print $1}\'', , returnStdout: true).trim()
+        APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
+        APP_PROCESS_ID = sh(script: 'jps | grep "$APPLICATION_NAME" | awk \'{print $1}\'', , returnStdout: true).trim()
     }
 //     parameters {
 //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -55,6 +56,7 @@ pipeline {
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
                 sh 'echo "AN_ACCESS_KEY_PSW is $AN_ACCESS_KEY_PSW"'
                 sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
+                sh 'echo "APPLICATION_NAME is ${APPLICATION_NAME}"'
 //                 sh 'echo "AN_ACCESS_KEY_PSW is $APP_PROCESS_ID"'
             }
         }
@@ -105,14 +107,10 @@ pipeline {
         }
 
         stage('Deploy') {
-            environment {
-                APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
-            }
             steps {
                 echo "当前用户: ${USER}"
                 echo "当前目录: ${PWD}"
                 echo "当前工作目录: ${WORKSPACE}"
-                echo "应用名: ${APPLICATION_NAME}"
 //                 echo '本地安装'
 //                 sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name -Dmaven.repo.local=/home/admin/.m2/repository'
 
