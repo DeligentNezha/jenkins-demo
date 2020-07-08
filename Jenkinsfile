@@ -50,6 +50,7 @@ pipeline {
         stage('Env Check') {
             environment {
                 AN_ACCESS_KEY = credentials('github')
+                ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
             }
             steps {
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
