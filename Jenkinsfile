@@ -9,7 +9,7 @@ pipeline {
     }
     environment {
         APPLICATION_NAME = sh(script: 'mvn help:evaluate -Dexpression=project.build.finalName | grep \"^[^\\[]\"', , returnStdout: true).trim()
-        APP_PROCESS_ID = sh(script: 'jps | grep "$APPLICATION_NAME" | awk \'{print $1}\'', , returnStdout: true).trim()
+        APP_PROCESS_ID = sh(script: 'jps | grep "$APPLICATION_NAME".jar | awk \'{print $1}\'', , returnStdout: true).trim()
     }
 //     parameters {
 //         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
