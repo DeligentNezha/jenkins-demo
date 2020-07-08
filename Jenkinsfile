@@ -56,7 +56,7 @@ pipeline {
                 sh 'echo "PROJECT_PACKAGING is ${PROJECT_PACKAGING}"'
                 sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 sh 'echo "ARTIFACT_FILENAME is $ARTIFACT_FILENAME"'
-                sh 'echo "$APPLICATION_NAME is $$APPLICATION_NAME"'
+                sh 'echo "APPLICATION_NAME is $APPLICATION_NAME"'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
                 sh 'echo "AN_ACCESS_KEY_USR is $AN_ACCESS_KEY_USR"'
