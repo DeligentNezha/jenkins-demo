@@ -102,7 +102,7 @@ pipeline {
             when {
               allOf {
                 branch 'develop'
-                expression { return "$APP_PROCESS_ID" > 0}
+                expression { return env.APP_PROCESS_ID > 0}
               }
             }
             steps {
