@@ -51,12 +51,12 @@ pipeline {
                 ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
                 APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()}
             steps {
-                sh '{ EXPORT_APP_PROCESS_ID=$(jps | grep $ARTIFACT_FILENAME | awk \'{print $1}\'); echo $EXPORT_APP_PROCESS_ID; export EXPORT_APP_PROCESS_ID; pstree -ahgGls admin > /opt/module/jenkins-pipeline; }'
-                sh 'echo "EXPORT_APP_PROCESS_ID is ${EXPORT_APP_PROCESS_ID}"'
+                sh 'pgrep -la -u admin > /opt/module/export-pid; { EXPORT_APP_PROCESS_ID=$(jps | grep $ARTIFACT_FILENAME | awk \'{print $1}\'); echo $EXPORT_APP_PROCESS_ID; export EXPORT_APP_PROCESS_ID; pstree -ahgGls admin > /opt/module/jenkins-pipeline; }'
+                sh 'pgrep -la -u admin > /opt/module/export-pid-echo; echo "EXPORT_APP_PROCESS_ID is ${EXPORT_APP_PROCESS_ID}"'
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "PROJECT_PACKAGING is ${PROJECT_PACKAGING}"'
                 sh 'echo "ARTIFACT_FILENAME is $ARTIFACT_FILENAME"'
-                sh 'echo "ARTIFACT_FILENAME is $APP_PROCESS_ID"'
+                sh 'echo "APP_PROCESS_ID is $APP_PROCESS_ID"'
                 sh 'printenv'
                 // 打印环境变量时用单引号包裹
                 sh 'echo "AN_ACCESS_KEY is $AN_ACCESS_KEY"'
