@@ -50,7 +50,7 @@ pipeline {
                 AN_ACCESS_KEY = credentials('github')
                 ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
                 APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()}
-                APP_PROCESS_ID_THROUGH_SH = sh(script: 'jps | grep $(mvn help:evaluate -Dexpression=project.build.finalName | grep "^[^\\[]").$(mvn help:evaluate -Dexpression=project.packaging | grep "^[^\\[]") | awk \'{print $1}\'', , returnStdout: true).trim()}
+                APP_PROCESS_ID_THROUGH_SH = sh(script: 'jps | grep $(mvn help:evaluate -Dexpression=project.build.finalName | grep "^[^\\[]").$(mvn help:evaluate -Dexpression=project.packaging | grep "^[^\\[]")', , returnStdout: true).trim()}
             steps {
                 sh 'echo "$PPID $$ $@" > /opt/module/export-pid; pgrep -la -u admin >> /opt/module/export-pid; { EXPORT_APP_PROCESS_ID=$(jps | grep $ARTIFACT_FILENAME | awk \'{print $1}\'); echo $EXPORT_APP_PROCESS_ID; mkdir -p /opt/module/build/$BUILD_ID; echo $EXPORT_APP_PROCESS_ID > /opt/module/build/$BUILD_ID/app_id; export EXPORT_APP_PROCESS_ID; pstree -ahgGls admin > /opt/module/jenkins-pipeline; }'
                 sh 'echo "$PPID $$ $@" > /opt/module/export-pid-echo; pgrep -la -u admin >> /opt/module/export-pid-echo; echo "EXPORT_APP_PROCESS_ID is $EXPORT_APP_PROCESS_ID"'
