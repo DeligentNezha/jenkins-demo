@@ -51,7 +51,7 @@ pipeline {
                 ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
                 APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()}
             steps {
-                sh '{ EXPORT_APP_PROCESS_ID=$(jps | grep $ARTIFACT_FILENAME | awk \'{print $1}\'); echo $EXPORT_APP_PROCESS_ID; }'
+                sh '{ EXPORT_APP_PROCESS_ID=$(jps | grep $ARTIFACT_FILENAME | awk \'{print $1}\'); echo $EXPORT_APP_PROCESS_ID; export EXPORT_APP_PROCESS_ID; }'
                 sh 'echo "EXPORT_APP_PROCESS_ID is ${EXPORT_APP_PROCESS_ID}"'
                 sh 'echo "PROJECT_FINAL_NAME is ${PROJECT_FINAL_NAME}"'
                 sh 'echo "PROJECT_PACKAGING is ${PROJECT_PACKAGING}"'
