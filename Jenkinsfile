@@ -47,7 +47,7 @@ pipeline {
 
         stage('Env Check') {
             environment {
-                AN_ACCESS_KEY = credentials('github')
+                AN_ACCESS_KEY = credentials('GitHub')
                 ARTIFACT_FILENAME = sh(script: 'echo "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING"', , returnStdout: true).trim()
                 APP_PROCESS_ID = sh(script: 'jps | grep "$PROJECT_FINAL_NAME"."$PROJECT_PACKAGING" | awk \'{print $1}\'', , returnStdout: true).trim()}
             steps {
